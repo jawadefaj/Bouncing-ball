@@ -13,9 +13,9 @@ public class FireBall : MonoBehaviour, iBall {
 		}
 	}
 	public void SetPosition(Vector2 pos){
-
+		///print ("called");
 		position = pos;
-		this.GetComponent<Transform>().position = position;
+		this.GetComponent<Transform>().localPosition = position;
 
 	}
 	// Use this for initialization

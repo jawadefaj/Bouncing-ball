@@ -15,7 +15,7 @@ public class FreezeBall :MonoBehaviour, iBall {
 	public void SetPosition(Vector2 pos){
 
 		position = pos;
-		this.GetComponent<Transform>().position = position;
+		this.GetComponent<Transform>().localPosition = position;
 
 	}
 	// Use this for initialization
