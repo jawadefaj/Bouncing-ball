@@ -1,9 +1,10 @@
 fileFormatVersion: 2
 guid: 93ba53dbce23a924bbd6a5a18a18ec82
-timeCreated: 1483619530
+timeCreated: 1483623512
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: fireball_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -76,7 +77,20 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: fireball_0
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 109
+        width: 606
+        height: 578
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 
