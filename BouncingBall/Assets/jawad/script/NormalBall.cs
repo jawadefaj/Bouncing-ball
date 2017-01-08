@@ -9,7 +9,7 @@ public class NormalBall : MonoBehaviour, iBall {
 	private Vector3 movedirection;
 	private float movespeed = 0.0f;
 
-	public void SetMoveDirection(Vector2 dir){
+	public void SetMoveDirection(Vector3 dir){
 		movedirection.x = dir.x;
 		movedirection.y = dir.y;
 		movedirection.z = this.transform.position.z;
@@ -82,6 +82,6 @@ public interface iBall{
 	}
 
 	void SetPosition (Vector2 pos);
-	void SetMoveDirection (Vector2 dir);
+	void SetMoveDirection (Vector3 dir);
 	void SetSpeed (float speed);
 }

@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class BallSpawner : MonoBehaviour, IBallSpawn {
 
-	public static List <GameObject> ballList = new List<GameObject>();
+
+	public List <GameObject> ballList = new List<GameObject>();
+	public static List<GameObject> staticBallList = new List<GameObject> ();
 	private List <GameObject> curBallList = new List<GameObject>();
 	private float speed = 2f;
 	private float time = 0;
 	IBallSpawn iballSpawn;
 	public Transform startpos, endpos;
 	private GameObject b;
-
-//	enum ballType {
-//		normal,
-//		fire,
-//		freze,
-//		split,
-//		power
-//	};
+	public GameObject ballShooter;
 
 
 	public void spawnBalls()
@@ -34,7 +29,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 				//print ("rand " + rand);
 				if (type == rand) 
 				{
-					print (type);
+					//print (type);
 					b = Instantiate (ball, new Vector3(20,20,20), Quaternion.identity);
 					b.GetComponent<iBall> ().SetPosition (pos);
 					curBallList.Add (b);
@@ -53,6 +48,8 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 
 	// Use this for initialization
 	void Start () {
+		ballShooter.GetComponent<IShootBall> ().initializeList (ballList);
+
 		iballSpawn = this.GetComponent<IBallSpawn> ();
 		iballSpawn.spawnBalls ();
 		iballSpawn.moveDown ();
@@ -79,6 +76,7 @@ public interface IBallSpawn
 
 public interface IShootBall
 {
-	void shoot ();
+	void shoot (Vector3 dir);
 	void setDestroyedID (int ballID);
+	void initializeList (List<GameObject> list);
 }
