@@ -54,6 +54,7 @@
      <Compile Include="Assets\jawad\script\PowerBall.cs" />
      <Compile Include="Assets\jawad\script\SplitBall.cs" />
      <Compile Include="Assets\jawad\script\test.cs" />
+     <Compile Include="Assets\shooterBehaviour.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

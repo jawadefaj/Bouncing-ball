@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallSpawner : MonoBehaviour, IBallSpawn {
 
-	public List <GameObject> ballList = new List<GameObject>();
+	public static List <GameObject> ballList = new List<GameObject>();
 	private List <GameObject> curBallList = new List<GameObject>();
 	private float speed = 2f;
 	private float time = 0;
@@ -75,4 +75,9 @@ public interface IBallSpawn
 	void spawnBalls ();	
 	void moveDown ();
 //	void setball (float x, float y);
+}
+
+public interface IShootBall
+{
+	void shoot (int ballID);
 }
