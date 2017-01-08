@@ -79,5 +79,6 @@ public interface IBallSpawn
 
 public interface IShootBall
 {
-	void shoot (int ballID);
+	void shoot ();
+	void setDestroyedID (int ballID);
 }

@@ -7,15 +7,22 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 	public Transform shootingPoint;
 	private GameObject ball;
 	private List<GameObject> balls = new List<GameObject> (BallSpawner.ballList);
+	private int curBallID;
+
 
 
 	//overriding IshootBall functions
-	public void shoot(int ballID)
+	public void setDestroyedID(int ballID)
+	{
+		curBallID = ballID;
+	}
+
+	public void shoot()
 	{
 		foreach(GameObject item in balls) {
 			//iBall iball = item.gameObject.GetComponent<iBall> ();
 			int type = ball.GetComponent<iBall>().type;
-			if (type == ballID) {
+			if (type == curBallID) {
 				//ball = Instantiate ();
 				ball = Instantiate(item, shootingPoint.position, Quaternion.identity);
 
@@ -31,7 +38,9 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetMouseButtonDown (0)) {
+			shoot ();
+		}
 	}
 
 
