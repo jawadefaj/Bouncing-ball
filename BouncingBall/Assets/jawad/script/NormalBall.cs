@@ -6,7 +6,8 @@ public class NormalBall : MonoBehaviour, iBall {
 
 	private int id = 1;
 	private Vector2 position;
-	public Vector3 movedirection;
+	private Vector3 movedirection;
+	private float movespeed = 0.0f;
 
 	public void SetMoveDirection(Vector2 dir){
 		movedirection.x = dir.x;
@@ -24,6 +25,9 @@ public class NormalBall : MonoBehaviour, iBall {
 		this.GetComponent<Transform>().position = position;
 
 	}
+	public void SetSpeed(float speed){
+		movespeed = speed;
+	}
 	// Use this for initialization
 	void Start () {
 		
@@ -31,15 +35,39 @@ public class NormalBall : MonoBehaviour, iBall {
 	
 	// Update is called once per frame
 	void Update () {
-		this.gameObject.transform.position = Vector2.MoveTowards (this.gameObject.transform.position, this.gameObject.transform.position + movedirection, 0.05f);
+		this.gameObject.transform.position = Vector2.MoveTowards (this.gameObject.transform.position, this.gameObject.transform.position + movedirection, movespeed);
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
 
-
-		if (other.tag == "Boundary")
+		print (this.transform.position);
+		if (other.tag == "Left")
 		{
-			print ("nothings done here too");
+			Vector3 normal = new Vector3 ( 1.0f, 0.0f, 0.0f).normalized;
+			float product = Vector3.Dot (movedirection, normal);
+			Vector3 pro = 2 * product * normal;
+			movedirection = movedirection - pro;
+		}
+		else if (other.tag == "Right")
+		{
+			Vector3 normal = new Vector3 ( -1.0f, 0.0f, 0.0f).normalized;
+			float product = Vector3.Dot (movedirection, normal);
+			Vector3 pro = 2 * product * normal;
+			movedirection = movedirection - pro;
+		}
+		else if (other.tag == "Top")
+		{
+			Vector3 normal = new Vector3 ( 0.0f, -1.0f, 0.0f).normalized;
+			float product = Vector3.Dot (movedirection, normal);
+			Vector3 pro = 2 * product * normal;
+			movedirection = movedirection - pro;
+		}
+		else if (other.tag == "Bottom")
+		{
+			Vector3 normal = new Vector3 ( 0.0f, 1.0f, 0.0f).normalized;
+			float product = Vector3.Dot (movedirection, normal);
+			Vector3 pro = 2 * product * normal;
+			movedirection = movedirection - pro;
 		}
 //		else
 //		{
@@ -55,4 +83,5 @@ public interface iBall{
 
 	void SetPosition (Vector2 pos);
 	void SetMoveDirection (Vector2 dir);
+	void SetSpeed (float speed);
 }

@@ -7,6 +7,7 @@ public class FireBall : MonoBehaviour, iBall {
 	private int id = 4;
 	private Vector2 position;
 	private Vector3 movedirection;
+	private float movespeed = 0.0f;
 
 	public void SetMoveDirection(Vector2 dir){
 		movedirection.x = dir.x;
@@ -24,6 +25,9 @@ public class FireBall : MonoBehaviour, iBall {
 		this.GetComponent<Transform>().position = position;
 
 	}
+	public void SetSpeed(float speed){
+		movespeed = speed;
+	}
 	// Use this for initialization
 	void Start () {
 		
@@ -31,6 +35,6 @@ public class FireBall : MonoBehaviour, iBall {
 	
 	// Update is called once per frame
 	void Update () {
-		this.gameObject.transform.position = Vector2.MoveTowards (this.gameObject.transform.position, this.gameObject.transform.position + movedirection, 0.05f);
+		this.gameObject.transform.position = Vector2.MoveTowards (this.gameObject.transform.position, this.gameObject.transform.position + movedirection, movespeed);
 	}
 }
