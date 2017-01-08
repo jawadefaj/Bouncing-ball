@@ -28,6 +28,10 @@ public class SplitBall : MonoBehaviour, iBall {
 	public void SetSpeed(float speed){
 		movespeed = speed;
 	}
+
+	public void Destroy(){
+		Destroy (this.gameObject);
+	}
 	// Use this for initialization
 	void Start () {
 		

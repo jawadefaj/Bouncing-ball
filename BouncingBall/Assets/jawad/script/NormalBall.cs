@@ -28,6 +28,10 @@ public class NormalBall : MonoBehaviour, iBall {
 	public void SetSpeed(float speed){
 		movespeed = speed;
 	}
+
+	public void Destroy(){
+		Destroy (this.gameObject);
+	}
 	// Use this for initialization
 	void Start () {
 		
@@ -84,4 +88,5 @@ public interface iBall{
 	void SetPosition (Vector2 pos);
 	void SetMoveDirection (Vector2 dir);
 	void SetSpeed (float speed);
+	void Destroy ();
 }
