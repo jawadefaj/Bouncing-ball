@@ -6,8 +6,9 @@ public class NormalBall : MonoBehaviour, iBall {
 
 	private int id = 1;
 	private Vector2 position;
-	private Vector3 movedirection;
-	private float movespeed = 0.0f;
+	public Vector3 movedirection;
+	private float movespeed = 0.07f;
+	public bool Thrown = false;
 
 	public void SetMoveDirection(Vector3 dir){
 		movedirection.x = dir.x;
@@ -19,6 +20,15 @@ public class NormalBall : MonoBehaviour, iBall {
 			return id;
 		}
 	}
+	public bool isThrown{
+		get{ 
+			return Thrown;
+		}
+		set{ 
+			Thrown = value;
+		}
+	}
+
 	public void SetPosition(Vector2 pos){
 		
 		position = pos;
@@ -28,6 +38,12 @@ public class NormalBall : MonoBehaviour, iBall {
 	public void SetSpeed(float speed){
 		movespeed = speed;
 	}
+
+	public void Destroy(){
+		Destroy (this.gameObject);
+	}
+
+
 	// Use this for initialization
 	void Start () {
 		
@@ -40,7 +56,17 @@ public class NormalBall : MonoBehaviour, iBall {
 
 	void OnTriggerEnter2D(Collider2D other){
 
-		print (this.transform.position);
+		//print (this.transform.position);
+		iBall i = other.GetComponent<iBall>();
+		print ("on trigger normal");
+		if(i != null){
+			if (i.isThrown)
+			{
+				Destroy (other.gameObject);
+				Destroy (this.gameObject);
+			}
+		}
+
 		if (other.tag == "Left")
 		{
 			Vector3 normal = new Vector3 ( 1.0f, 0.0f, 0.0f).normalized;
@@ -69,10 +95,6 @@ public class NormalBall : MonoBehaviour, iBall {
 			Vector3 pro = 2 * product * normal;
 			movedirection = movedirection - pro;
 		}
-//		else
-//		{
-//			print ("Nothings done here");
-//		}
 	}
 }
 
@@ -80,8 +102,14 @@ public interface iBall{
 	int type {
 		get;
 	}
+	bool isThrown {
+		get;
+		set;
+	}
 
 	void SetPosition (Vector2 pos);
 	void SetMoveDirection (Vector3 dir);
 	void SetSpeed (float speed);
+	void Destroy ();
+
 }
