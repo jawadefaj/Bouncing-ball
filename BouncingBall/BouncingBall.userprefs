@@ -1,22 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\shooterBehaviour.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\jawad\script\NormalBall.cs">
     <Files>
-<<<<<<< HEAD
-      <File FileName="Assets\shooterBehaviour.cs" Line="40" Column="43" />
-      <File FileName="Assets\AvikFolder\Scripts\BallSpawner.cs" Line="39" Column="4" NotebookId="1" />
-      <File FileName="Assets\jawad\script\FireBall.cs" Line="15" Column="47" NotebookId="1" />
-      <File FileName="Assets\jawad\script\SplitBall.cs" Line="12" Column="38" NotebookId="1" />
-      <File FileName="Assets\jawad\script\PowerBall.cs" Line="12" Column="38" NotebookId="1" />
-      <File FileName="Assets\jawad\script\NormalBall.cs" Line="44" Column="27" NotebookId="1" />
-      <File FileName="Assets\jawad\script\FreezeBall.cs" Line="12" Column="38" NotebookId="1" />
-=======
       <File FileName="Assets\jawad\script\NormalBall.cs" Line="44" Column="2" />
       <File FileName="Assets\jawad\script\PowerBall.cs" Line="44" Column="41" />
       <File FileName="Assets\jawad\script\FreezeBall.cs" Line="76" Column="3" />
       <File FileName="Assets\jawad\script\FireBall.cs" Line="76" Column="3" />
       <File FileName="Assets\jawad\script\SplitBall.cs" Line="75" Column="3" />
->>>>>>> origin/jawad
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
