@@ -9,6 +9,7 @@ public class PowerBall : MonoBehaviour, iBall {
 	private Vector3 movedirection;
 	private float movespeed = 0.0f;
 	public bool Thrown = false;
+	//public GameObject ballSpawner;
 
 	public void SetMoveDirection(Vector3 dir){
 		movedirection.x = dir.x;
@@ -54,6 +55,17 @@ public class PowerBall : MonoBehaviour, iBall {
 	void OnTriggerEnter2D(Collider2D other){
 
 		//print (this.transform.position);
+		iBall iball = this.GetComponent<iBall>();
+		if (iball != null && iball.isThrown) {
+			print ("I am here");
+			foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
+				IBallSpawn iballspawn = ob.GetComponent<IBallSpawn> ();
+				if (iballspawn != null)
+					iballspawn.moveUp ();
+			}
+			//ballSpawner.GetComponent<IBallSpawn> ().moveUp ();
+		}
+
 		iBall i = other.GetComponent<iBall>();
 		print ("on trigger power");
 		if(i != null){
@@ -62,9 +74,13 @@ public class PowerBall : MonoBehaviour, iBall {
 				
 				foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
 					IShootBall ishootball = ob.GetComponent<IShootBall> ();
+					//IBallSpawn iballSpawn = ob.GetComponent<IBallSpawn> ();
 					if(ishootball!=null)
-					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
+						ishootball.setDestroyedID (this.GetComponent<iBall>().type);
+//					if (iballSpawn != null)
+//						iballSpawn.moveUp ();
 				}
+
 				Destroy (other.gameObject);
 				Destroy (this.gameObject);
 			}

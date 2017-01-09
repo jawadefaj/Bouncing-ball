@@ -15,6 +15,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	private GameObject b;
 	public GameObject ballShooter;
 	private GameObject tempBall;
+	private int countUp = 0;
 
 
 	public void spawnBalls()
@@ -22,7 +23,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 		float inc = 0f;
 		for (int i = 0; i < 5; i++) {
 			Vector2 pos = new Vector2 (startpos.localPosition.x + inc, startpos.localPosition.y);
-			int rand = Random.Range (1,30) % 5 + 1;
+			int rand =  Random.Range (1,30) % 5 + 1;
 			foreach (GameObject ball in ballList) {
 				int type = ball.GetComponent<iBall> ().type;
 				
@@ -52,6 +53,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 
 	public void moveUp()
 	{
+		countUp++;
 		print ("total balls " + curBallList.Count);
 		foreach (var item in curBallList) {
 			if(item!=null)
@@ -73,16 +75,22 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 		if (Input.GetKeyDown (KeyCode.A)) {
 			
 			iballSpawn.moveDown ();
-			iballSpawn.spawnBalls ();
+			if(countUp==0)
+				iballSpawn.spawnBalls ();
+			else if(countUp>0)
+				countUp--;
 		} else if (Input.GetKeyDown (KeyCode.D)) {
 			iballSpawn.moveUp ();
 		}
-//		time += Time.deltaTime;
-//		if (time > 3f) {
-//			iballSpawn.spawnBalls ();
-//			iballSpawn.moveDown ();
-//			time = 0f;
-//		}
+		//time += Time.deltaTime;
+		if (time > 3f) {
+			iballSpawn.moveDown ();
+			if(countUp==0)
+				iballSpawn.spawnBalls ();
+			else if(countUp>0)
+				countUp--;
+			time = 0f;
+		}
 	}
 
 

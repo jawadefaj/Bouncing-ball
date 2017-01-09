@@ -8,7 +8,7 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 	public Transform lowerend;
 	private GameObject ball;
 	private List<GameObject> balls = new List<GameObject> ();
-	private int curBallID = 1;
+	private int curBallID = 2;
 	//private bool rotatePoint = false;
 
 
