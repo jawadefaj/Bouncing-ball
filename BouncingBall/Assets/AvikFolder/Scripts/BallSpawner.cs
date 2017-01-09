@@ -19,7 +19,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	public void spawnBalls()
 	{
 		float inc = 0f;
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 1; i++) {
 			Vector2 pos = new Vector2 (startpos.localPosition.x + inc, startpos.localPosition.y);
 			int rand = Random.Range (1,30) % 5 + 1;
 			foreach (GameObject ball in ballList) {
@@ -61,12 +61,12 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 			iballSpawn.spawnBalls ();
 			iballSpawn.moveDown ();
 		}
-		time += Time.deltaTime;
-		if (time > 3f) {
-			iballSpawn.spawnBalls ();
-			iballSpawn.moveDown ();
-			time = 0f;
-		}
+//		time += Time.deltaTime;
+//		if (time > 3f) {
+//			iballSpawn.spawnBalls ();
+//			iballSpawn.moveDown ();
+//			time = 0f;
+//		}
 	}
 
 

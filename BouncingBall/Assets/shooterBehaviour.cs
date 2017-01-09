@@ -39,6 +39,7 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 				ball = Instantiate(item, shootingPoint.position, Quaternion.identity);
 				ball.GetComponent<iBall> ().SetMoveDirection (curDir);
 				ball.GetComponent<iBall> ().SetSpeed (0.07f);
+				ball.GetComponent<iBall> ().isThrown = true;
 				//print("cur dir "+curDir);
 				//lowerend.transform.Rotate (new Vector3 (0.0f, 0.0f, 1.0f), angle);
 				//lowerend.RotateAround (lowerend.transform.position, new Vector3(0.0f, 0.0f, 1.0f), angle);
