@@ -10,7 +10,7 @@ public class NormalBall : MonoBehaviour, iBall {
 	private float movespeed = 0.07f;
 	public bool Thrown = false;
 
-	public void SetMoveDirection(Vector2 dir){
+	public void SetMoveDirection(Vector3 dir){
 		movedirection.x = dir.x;
 		movedirection.y = dir.y;
 		movedirection.z = this.transform.position.z;
@@ -32,7 +32,7 @@ public class NormalBall : MonoBehaviour, iBall {
 	public void SetPosition(Vector2 pos){
 		
 		position = pos;
-		this.GetComponent<Transform>().position = position;
+		this.GetComponent<Transform>().localPosition = position;
 
 	}
 	public void SetSpeed(float speed){
@@ -108,7 +108,7 @@ public interface iBall{
 	}
 
 	void SetPosition (Vector2 pos);
-	void SetMoveDirection (Vector2 dir);
+	void SetMoveDirection (Vector3 dir);
 	void SetSpeed (float speed);
 	void Destroy ();
 
