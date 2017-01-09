@@ -5,6 +5,7 @@ using UnityEngine;
 public class shooterBehaviour : MonoBehaviour, IShootBall {
 
 	public Transform shootingPoint;
+	public Transform lowerend;
 	private GameObject ball;
 	private List<GameObject> balls = new List<GameObject> ();
 	private int curBallID = 1;
@@ -25,6 +26,7 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 
 	public void shoot(Vector3 dir)
 	{
+		print ("Direction " + dir);
 		//print ("Shoot called");
 		//print (balls.Count);
 		foreach(GameObject item in balls) {
@@ -32,21 +34,14 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 			//iBall iball = item.gameObject.GetComponent<iBall> ();
 			int type = item.GetComponent<iBall>().type;
 			if (type == curBallID) {
-				//ball = Instantiate ();
-				//print("Entered");
-				Vector3 targetDir = dir - transform.position;
-				float angle = Mathf.Atan2 (targetDir.y,targetDir.x)*Mathf.Rad2Deg;
-				Quaternion q = Quaternion.AngleAxis (angle,Vector3.forward);
-				StartCoroutine (rotatePoint(angle,q));
-				//transform.rotation = Quaternion.LookRotation (transform.rotation,q,step);
-				//Vector3 curDir = new Vector3 (0,1,0);
-				//Vector3 newDir = Vector3.RotateTowards (transform.forward, targetDir,10,0);
-				
-				//Vector3 zaxix = new Vector3(0,0,1);
-				//this.transform.RotateAround (dir, zaxix, 20);
-				//ball = Instantiate(item, shootingPoint.position, Quaternion.identity);
-				//ball.GetComponent<iBall> ().SetMoveDirection (shootingPoint.position);
-
+				lowerend.up = dir;
+				Vector3 curDir = -lowerend.position + shootingPoint.position;
+				ball = Instantiate(item, shootingPoint.position, Quaternion.identity);
+				ball.GetComponent<iBall> ().SetMoveDirection (curDir);
+				ball.GetComponent<iBall> ().SetSpeed (0.07f);
+				//print("cur dir "+curDir);
+				//lowerend.transform.Rotate (new Vector3 (0.0f, 0.0f, 1.0f), angle);
+				//lowerend.RotateAround (lowerend.transform.position, new Vector3(0.0f, 0.0f, 1.0f), angle);
 
 			}
 		}
@@ -73,9 +68,11 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 			Vector3 pos = Input.mousePosition;
 			pos.z = -10;
 			pos = Camera.main.ScreenToWorldPoint (pos);
-			print (pos.x + " " +  pos.y);
-			Vector3 direc = new Vector3 (pos.x, pos.y, 0);
-			shoot (direc);
+			//print (pos.x + " " +  pos.y);
+			Vector3 direc = new Vector3 (-pos.x, -pos.y, 0);
+			Vector3 dir = (direc - lowerend.position).normalized;
+			//shoot (dir);
+			shoot (direc - lowerend.position);
 		}
 	}
 

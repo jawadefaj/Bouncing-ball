@@ -61,6 +61,12 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 			iballSpawn.spawnBalls ();
 			iballSpawn.moveDown ();
 		}
+		time += Time.deltaTime;
+		if (time > 3f) {
+			iballSpawn.spawnBalls ();
+			iballSpawn.moveDown ();
+			time = 0f;
+		}
 	}
 
 
@@ -71,6 +77,7 @@ public interface IBallSpawn
 {
 	void spawnBalls ();	
 	void moveDown ();
+
 //	void setball (float x, float y);
 }
 
