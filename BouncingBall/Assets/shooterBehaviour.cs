@@ -21,7 +21,9 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 	//overriding IshootBall functions
 	public void setDestroyedID(int ballID)
 	{
+		
 		curBallID = ballID;
+		print (curBallID);
 	}
 
 	public void shoot(Vector3 dir)
@@ -34,6 +36,7 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 			//iBall iball = item.gameObject.GetComponent<iBall> ();
 			int type = item.GetComponent<iBall>().type;
 			if (type == curBallID) {
+				print (curBallID);
 				lowerend.up = dir;
 				Vector3 curDir = -lowerend.position + shootingPoint.position;
 				ball = Instantiate(item, shootingPoint.position, Quaternion.identity);

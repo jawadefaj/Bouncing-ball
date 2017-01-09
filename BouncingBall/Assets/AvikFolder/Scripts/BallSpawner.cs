@@ -14,12 +14,13 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	public Transform startpos, endpos;
 	private GameObject b;
 	public GameObject ballShooter;
+	private GameObject tempBall;
 
 
 	public void spawnBalls()
 	{
 		float inc = 0f;
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 5; i++) {
 			Vector2 pos = new Vector2 (startpos.localPosition.x + inc, startpos.localPosition.y);
 			int rand = Random.Range (1,30) % 5 + 1;
 			foreach (GameObject ball in ballList) {
@@ -30,19 +31,31 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 				if (type == rand) 
 				{
 					//print (type);
-					b = Instantiate (ball, new Vector3(20,20,20), Quaternion.identity);
+					tempBall = ball;
+					b = Instantiate (tempBall, new Vector3(20,20,20), Quaternion.identity);
 					b.GetComponent<iBall> ().SetPosition (pos);
 					curBallList.Add (b);
 				}
 			}
-			inc += 1.9f;
+			inc += 1.545f;
 		}
 	}
 
 	public void moveDown()
 	{
+		print ("total balls " + curBallList.Count);
 		foreach (var item in curBallList) {
-			item.transform.Translate (new Vector3(0,-1,0)*2);
+			if(item!=null)
+				item.transform.Translate (new Vector3(0,-1,0)*1.6f);
+		}
+	}
+
+	public void moveUp()
+	{
+		print ("total balls " + curBallList.Count);
+		foreach (var item in curBallList) {
+			if(item!=null)
+				item.transform.Translate (new Vector3(0,1,0)*1.6f);
 		}
 	}
 
@@ -52,14 +65,17 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 
 		iballSpawn = this.GetComponent<IBallSpawn> ();
 		iballSpawn.spawnBalls ();
-		iballSpawn.moveDown ();
+		//iballSpawn.moveDown ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.A)) {
-			iballSpawn.spawnBalls ();
+			
 			iballSpawn.moveDown ();
+			iballSpawn.spawnBalls ();
+		} else if (Input.GetKeyDown (KeyCode.D)) {
+			iballSpawn.moveUp ();
 		}
 //		time += Time.deltaTime;
 //		if (time > 3f) {
@@ -77,6 +93,7 @@ public interface IBallSpawn
 {
 	void spawnBalls ();	
 	void moveDown ();
+	void moveUp ();
 
 //	void setball (float x, float y);
 }

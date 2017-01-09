@@ -60,8 +60,14 @@ public class FreezeBall :MonoBehaviour, iBall {
 		if(i != null){
 			if (i.isThrown)
 			{
+				foreach (GameObject ob in  Transform.FindObjectsOfType<GameObject>()) {
+					IShootBall ishootball = ob.GetComponent<IShootBall> ();
+					if(ishootball!=null)
+					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
+				}
 				Destroy (other.gameObject);
 				Destroy (this.gameObject);
+
 			}
 		}
 
