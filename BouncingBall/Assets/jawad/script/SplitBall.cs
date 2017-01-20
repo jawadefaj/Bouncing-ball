@@ -59,14 +59,24 @@ public class SplitBall : MonoBehaviour, iBall {
 		{
 			Vector3 normal = new Vector3 ( 0.0f, 1.0f, 0.0f).normalized;
 			float product = Vector3.Dot ( - movedirection, normal);
+			float angle = Vector3.Angle (movedirection, new Vector3 (1.0f, 0.0f, 0.0f));
+			print (" angle "+angle);
 			Vector3 pro = 2 * product * normal;
 			Vector3 newmovedirection = - movedirection - pro;
 			newmovedirection.Normalize();
-			GameObject newball = Instantiate (this.gameObject);
+			GameObject newball = Instantiate (this.gameObject, this.transform.position, this.transform.rotation);
+
 			iBall ib = newball.GetComponent<iBall> ();
 			ib.isThrown = true;
+			if (angle > 80 && angle < 100)
+			{
+				newmovedirection = new Vector3 (-newmovedirection.y, newmovedirection.y, newmovedirection.z);
+				movedirection = new Vector3 (movedirection.y, movedirection.y, movedirection.z);
+			}
+				
+
 			ib.SetMoveDirection (newmovedirection);
-			this.transform.localScale *= 0.7f; 
+			this.transform.localScale *= 0.70f; 
 			newball.transform.localScale = this.transform.localScale;
 			ib.SetSpeed (movespeed);
 			split = false;
