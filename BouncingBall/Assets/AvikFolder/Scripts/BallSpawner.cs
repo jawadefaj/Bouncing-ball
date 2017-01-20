@@ -16,6 +16,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	public GameObject ballShooter;
 	private GameObject tempBall;
 	private int countUp = 0;
+	private float timerInc = .1f;
 
 
 	public void spawnBalls()
@@ -82,14 +83,15 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 		} else if (Input.GetKeyDown (KeyCode.D)) {
 			iballSpawn.moveUp ();
 		}
-		//time += Time.deltaTime;
+		time += Time.deltaTime;
 		if (time > 3f) {
 			iballSpawn.moveDown ();
 			if(countUp==0)
 				iballSpawn.spawnBalls ();
 			else if(countUp>0)
 				countUp--;
-			time = 0f;
+			time = timerInc;
+			timerInc += .1f;
 		}
 	}
 
