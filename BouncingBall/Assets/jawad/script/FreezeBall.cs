@@ -10,6 +10,7 @@ public class FreezeBall :MonoBehaviour, iBall {
 	private float movespeed = 0.0f;
 	public bool Thrown = false;
 
+
 	public void SetMoveDirection(Vector3 dir){
 		movedirection.x = dir.x;
 		movedirection.y = dir.y;
@@ -56,6 +57,10 @@ public class FreezeBall :MonoBehaviour, iBall {
 
 		//print (this.transform.position);
 		iBall i = other.GetComponent<iBall>();
+		iBall th = this.GetComponent<iBall> ();
+		if (th != null) {
+			BallSpawner.freeze = true;
+		}
 		print ("on trigger freeze");
 		if(i != null){
 			if (i.isThrown)
@@ -65,6 +70,8 @@ public class FreezeBall :MonoBehaviour, iBall {
 					if(ishootball!=null)
 					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
 				}
+				BallSpawner.freeze = true;
+				print (BallSpawner.freeze);
 				Destroy (other.gameObject);
 				Destroy (this.gameObject);
 

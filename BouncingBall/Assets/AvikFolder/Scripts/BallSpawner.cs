@@ -17,6 +17,8 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	private GameObject tempBall;
 	private int countUp = 0;
 	private float timerInc = .1f;
+	public static bool freeze = false;
+	private float interval = 3f;
 
 
 	public void spawnBalls()
@@ -34,6 +36,8 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 				{
 					//print (type);
 					tempBall = ball;
+//					if(type==5)
+//						type 
 					b = Instantiate (tempBall, new Vector3(20,20,20), Quaternion.identity);
 					b.GetComponent<iBall> ().SetPosition (pos);
 					curBallList.Add (b);
@@ -84,14 +88,20 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 			iballSpawn.moveUp ();
 		}
 		time += Time.deltaTime;
-		if (time > 3f) {
+		if (time > interval && !freeze) {
 			iballSpawn.moveDown ();
 			if(countUp==0)
 				iballSpawn.spawnBalls ();
 			else if(countUp>0)
 				countUp--;
 			time = timerInc;
+			interval = 3f;
 			timerInc += .1f;
+		}
+		if (freeze) {
+			print ("freezed");
+			interval = 6f;
+			freeze = false;
 		}
 	}
 

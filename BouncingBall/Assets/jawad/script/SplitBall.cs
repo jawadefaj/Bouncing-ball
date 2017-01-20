@@ -55,8 +55,9 @@ public class SplitBall : MonoBehaviour, iBall {
 	// Update is called once per frame
 	void Update () {
 		this.gameObject.transform.position = Vector2.MoveTowards (this.gameObject.transform.position, this.gameObject.transform.position + movedirection, movespeed);
-		if ((Time.time - instantiatetime) > splittime && split)
+		if ((Time.time - instantiatetime) > splittime && Thrown)
 		{
+			instantiatetime = Time.time;
 			Vector3 normal = new Vector3 ( 0.0f, 1.0f, 0.0f).normalized;
 			float product = Vector3.Dot ( - movedirection, normal);
 			float angle = Vector3.Angle (movedirection, new Vector3 (1.0f, 0.0f, 0.0f));
@@ -76,10 +77,10 @@ public class SplitBall : MonoBehaviour, iBall {
 				
 
 			ib.SetMoveDirection (newmovedirection);
-			this.transform.localScale *= 0.70f; 
+			this.transform.localScale *= 1.0f; 
 			newball.transform.localScale = this.transform.localScale;
 			ib.SetSpeed (movespeed);
-			split = false;
+			//split = false;
 		}
 
 
@@ -126,6 +127,7 @@ public class SplitBall : MonoBehaviour, iBall {
 			float product = Vector3.Dot (movedirection, normal);
 			Vector3 pro = 2 * product * normal;
 			movedirection = movedirection - pro;
+			Destroy (this.gameObject);
 		}
 		else if (other.tag == "Bottom")
 		{

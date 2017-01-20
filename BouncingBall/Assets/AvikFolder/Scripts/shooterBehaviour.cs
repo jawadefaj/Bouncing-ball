@@ -35,13 +35,14 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 		//	print ("Shoot called");
 			//iBall iball = item.gameObject.GetComponent<iBall> ();
 			int type = item.GetComponent<iBall>().type;
+
 			if (type == curBallID) {
 				print (curBallID);
 				lowerend.up = dir;
 				Vector3 curDir = -lowerend.position + shootingPoint.position;
 				ball = Instantiate(item, shootingPoint.position, Quaternion.identity);
 				ball.GetComponent<iBall> ().SetMoveDirection (curDir);
-				ball.GetComponent<iBall> ().SetSpeed (0.07f);
+				ball.GetComponent<iBall> ().SetSpeed (0.04f);
 				ball.GetComponent<iBall> ().isThrown = true;
 				//print("cur dir "+curDir);
 				//lowerend.transform.Rotate (new Vector3 (0.0f, 0.0f, 1.0f), angle);
@@ -62,7 +63,7 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 
 	// Use this for initialization
 	void Start () {
-		
+		curBallID  =  Random.Range (1,30) % 5 + 1;
 	}
 	
 	// Update is called once per frame
