@@ -43,6 +43,12 @@ public class FireBall : MonoBehaviour, iBall {
 
 	public void Destroy(){
 		Destroy (this.gameObject);
+		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
+			IShootBall ishootball = ob.GetComponent<IShootBall> ();
+			if (ishootball != null)
+				ishootball.isShootable = true;
+
+		}
 	}
 	// Use this for initialization
 	void Start () {
@@ -58,7 +64,7 @@ public class FireBall : MonoBehaviour, iBall {
 		iBall i = other.GetComponent<iBall>();
 		if (this.Thrown == true)
 		{
-			print ("inside if");
+		//	print ("inside if");
 			if (i != null)
 			{
 				RaycastHit2D rr1 = Physics2D.Raycast (other.transform.position + new Vector3(0.0f, 0.8f, 0.0f), new Vector2 (0.0f, 1.0f), blustdistance);
@@ -82,7 +88,7 @@ public class FireBall : MonoBehaviour, iBall {
 
 		//print (this.transform.position);
 
-		print ("on trigger fire");
+		//print ("on trigger fire");
 		if(i != null){
 			if (i.isThrown)
 			{
@@ -92,8 +98,10 @@ public class FireBall : MonoBehaviour, iBall {
 					if(ishootball!=null)
 					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
 				}
-				Destroy (other.gameObject);
-				Destroy (this.gameObject);
+				other.GetComponent<iBall> ().Destroy ();
+				this.GetComponent<iBall> ().Destroy ();
+				//Destroy (other.gameObject);
+				//Destroy (this.gameObject);
 			}
 		}
 

@@ -46,6 +46,12 @@ public class SplitBall : MonoBehaviour, iBall {
 
 	public void Destroy(){
 		Destroy (this.gameObject);
+		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
+			IShootBall ishootball = ob.GetComponent<IShootBall> ();
+			if (ishootball != null)
+				ishootball.isShootable = true;
+
+		}
 	}
 	// Use this for initialization
 	void Start () {
@@ -61,7 +67,7 @@ public class SplitBall : MonoBehaviour, iBall {
 			Vector3 normal = new Vector3 ( 0.0f, 1.0f, 0.0f).normalized;
 			float product = Vector3.Dot ( - movedirection, normal);
 			float angle = Vector3.Angle (movedirection, new Vector3 (1.0f, 0.0f, 0.0f));
-			print (" angle "+angle);
+			//print (" angle "+angle);
 			Vector3 pro = 2 * product * normal;
 			Vector3 newmovedirection = - movedirection - pro;
 			newmovedirection.Normalize();
@@ -91,18 +97,20 @@ public class SplitBall : MonoBehaviour, iBall {
 
 		//print (this.transform.position);
 		iBall i = other.GetComponent<iBall>();
-		print ("on trigger split");
+		//print ("on trigger split");
 		if(i != null){
 			if (i.isThrown && !this.isThrown)
 			{
-				print ("isthwn");
+			//	print ("isthwn");
 				foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
 					IShootBall ishootball = ob.GetComponent<IShootBall> ();
 					if(ishootball!=null)
 					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
 				}
-				Destroy (other.gameObject);
-				Destroy (this.gameObject);
+				other.GetComponent<iBall> ().Destroy ();
+				this.GetComponent<iBall> ().Destroy ();
+			//	Destroy (other.gameObject);
+				//Destroy (this.gameObject);
 
 			}
 		}

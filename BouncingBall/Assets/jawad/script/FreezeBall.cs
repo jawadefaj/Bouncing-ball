@@ -42,6 +42,12 @@ public class FreezeBall :MonoBehaviour, iBall {
 
 	public void Destroy(){
 		Destroy (this.gameObject);
+		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
+			IShootBall ishootball = ob.GetComponent<IShootBall> ();
+			if (ishootball != null)
+				ishootball.isShootable = true;
+
+		}
 	}
 	// Use this for initialization
 	void Start () {
@@ -61,7 +67,7 @@ public class FreezeBall :MonoBehaviour, iBall {
 		if (th != null) {
 			BallSpawner.freeze = true;
 		}
-		print ("on trigger freeze");
+		//print ("on trigger freeze");
 		if(i != null){
 			if (i.isThrown)
 			{
@@ -71,9 +77,12 @@ public class FreezeBall :MonoBehaviour, iBall {
 					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
 				}
 				BallSpawner.freeze = true;
-				print (BallSpawner.freeze);
-				Destroy (other.gameObject);
-				Destroy (this.gameObject);
+			//	print (BallSpawner.freeze);
+
+				other.GetComponent<iBall> ().Destroy ();
+				this.GetComponent<iBall> ().Destroy ();
+				//Destroy (other.gameObject);
+				//Destroy (this.gameObject);
 
 			}
 		}

@@ -42,6 +42,12 @@ public class PowerBall : MonoBehaviour, iBall {
 
 	public void Destroy(){
 		Destroy (this.gameObject);
+		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
+			IShootBall ishootball = ob.GetComponent<IShootBall> ();
+			if (ishootball != null)
+				ishootball.isShootable = true;
+
+		}
 	}
 	// Use this for initialization
 	void Start () {
@@ -57,7 +63,7 @@ public class PowerBall : MonoBehaviour, iBall {
 		//print (this.transform.position);
 		iBall iball = this.GetComponent<iBall>();
 		if (iball != null && iball.isThrown) {
-			print ("I am here");
+		//	print ("I am here");
 			foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
 				IBallSpawn iballspawn = ob.GetComponent<IBallSpawn> ();
 				if (iballspawn != null)
@@ -67,7 +73,7 @@ public class PowerBall : MonoBehaviour, iBall {
 		}
 
 		iBall i = other.GetComponent<iBall>();
-		print ("on trigger power");
+//		print ("on trigger power");
 		if(i != null){
 			if (i.isThrown)
 			{
@@ -80,9 +86,10 @@ public class PowerBall : MonoBehaviour, iBall {
 //					if (iballSpawn != null)
 //						iballSpawn.moveUp ();
 				}
-
-				Destroy (other.gameObject);
-				Destroy (this.gameObject);
+				other.GetComponent<iBall> ().Destroy ();
+				this.GetComponent<iBall> ().Destroy ();
+				//Destroy (other.gameObject);
+				//Destroy (this.gameObject);
 			}
 		}
 

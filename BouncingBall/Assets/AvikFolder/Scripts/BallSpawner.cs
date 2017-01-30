@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BallSpawner : MonoBehaviour, IBallSpawn {
 
@@ -9,7 +10,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	public static List<GameObject> staticBallList = new List<GameObject> ();
 	private List <GameObject> curBallList = new List<GameObject>();
 	private float speed = 2f;
-	private float time = 0;
+	private float curTime = 0;
 	IBallSpawn iballSpawn;
 	public Transform startpos, endpos;
 	private GameObject b;
@@ -18,7 +19,8 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	private int countUp = 0;
 	private float timerInc = .1f;
 	public static bool freeze = false;
-	private float interval = 3f;
+	private float interval = 2.5f;
+	private int test = 0;
 
 
 	public void spawnBalls()
@@ -47,6 +49,26 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 		}
 	}
 
+	/// <summary>
+	/// Raises the click exit event.
+	/// </summary>
+	public void OnClickExit()
+	{
+		print ("On click exit called");
+		Application.Quit ();
+		SceneManager.LoadScene (1);
+
+	}
+
+	/// <summary>
+	/// Raises the click restart event.
+	/// </summary>
+	public void OnClickRestart()
+	{
+		print ("On click restart called");
+		InitializeGame ();
+	}
+
 	public void moveDown()
 	{
 		print ("total balls " + curBallList.Count);
@@ -70,9 +92,33 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	void Start () {
 		ballShooter.GetComponent<IShootBall> ().initializeList (ballList);
 
-		iballSpawn = this.GetComponent<IBallSpawn> ();
-		iballSpawn.spawnBalls ();
+		InitializeGame ();
+		//iballSpawn.spawnBalls ();
 		//iballSpawn.moveDown ();
+	}
+
+	void InitializeGame()
+	{
+		test++;
+
+		foreach (var item in curBallList) {
+			if(item)
+				item.GetComponent<iBall> ().Destroy ();
+		}
+		curBallList.Clear ();
+
+		print ("Curball count " + curBallList.Count);
+		//if (test <= 1) {
+			iballSpawn = this.GetComponent<IBallSpawn> ();
+			iballSpawn.spawnBalls ();
+			for (int i = 0; i < 2; i++) {
+				iballSpawn.moveDown ();
+				iballSpawn.spawnBalls ();
+			}
+		timerInc = 0;
+		curTime = 0;
+		//interval = 0;
+		//}
 	}
 	
 	// Update is called once per frame
@@ -87,16 +133,18 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 		} else if (Input.GetKeyDown (KeyCode.D)) {
 			iballSpawn.moveUp ();
 		}
-		time += Time.deltaTime;
-		if (time > interval && !freeze) {
+		curTime += Time.deltaTime;
+		if (curTime > interval && !freeze) {
 			iballSpawn.moveDown ();
 			if(countUp==0)
 				iballSpawn.spawnBalls ();
 			else if(countUp>0)
 				countUp--;
-			time = timerInc;
-			interval = 3f;
-			timerInc += .1f;
+			curTime = timerInc;
+			interval = 2.5f;
+			if (timerInc < 1.5f) {
+				timerInc += .1f;
+			}
 		}
 		if (freeze) {
 			print ("freezed");
@@ -123,4 +171,5 @@ public interface IShootBall
 	void shoot (Vector3 dir);
 	void setDestroyedID (int ballID);
 	void initializeList (List<GameObject> list);
+	bool isShootable{ get; set; }
 }

@@ -9,26 +9,37 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 	private GameObject ball;
 	private List<GameObject> balls = new List<GameObject> ();
 	private int curBallID = 1;
+	private bool isShoot = true;
 	//private bool rotatePoint = false;
 
+
+	public bool isShootable{
+		get{ 
+			return isShoot;
+		}
+		set{ 
+			isShoot = value;
+		}
+	}
 
 	public void initializeList(List<GameObject> list)
 	{
 		foreach (GameObject ob in list) {
 			balls.Add (ob);
 		}
+		isShootable = true;
 	}
 	//overriding IshootBall functions
 	public void setDestroyedID(int ballID)
 	{
 		
 		curBallID = ballID;
-		print (curBallID);
+	//	print (curBallID);
 	}
 
 	public void shoot(Vector3 dir)
 	{
-		print ("Direction " + dir);
+//		print ("Direction " + dir);
 		//print ("Shoot called");
 		//print (balls.Count);
 		foreach(GameObject item in balls) {
@@ -42,7 +53,7 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 				Vector3 curDir = -lowerend.position + shootingPoint.position;
 				ball = Instantiate(item, shootingPoint.position, Quaternion.identity);
 				ball.GetComponent<iBall> ().SetMoveDirection (curDir);
-				ball.GetComponent<iBall> ().SetSpeed (0.04f);
+				ball.GetComponent<iBall> ().SetSpeed (0.08f);
 				ball.GetComponent<iBall> ().isThrown = true;
 				//print("cur dir "+curDir);
 				//lowerend.transform.Rotate (new Vector3 (0.0f, 0.0f, 1.0f), angle);
@@ -65,19 +76,24 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 	void Start () {
 		curBallID  =  Random.Range (1,30) % 5 + 1;
 	}
-	
+
+
+
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) && isShootable) {
 			
 			Vector3 pos = Input.mousePosition;
 			pos.z = -10;
 			pos = Camera.main.ScreenToWorldPoint (pos);
-			//print (pos.x + " " +  pos.y);
-			Vector3 direc = new Vector3 (-pos.x, -pos.y, 0);
-			Vector3 dir = (direc - lowerend.position).normalized;
-			//shoot (dir);
-			shoot (direc - lowerend.position);
+			print (-pos.x + " " +  -pos.y);
+			if (-pos.y > -2.7) {
+				Vector3 direc = new Vector3 (-pos.x, -pos.y, 0);
+				Vector3 dir = (direc - lowerend.position).normalized;
+				//shoot (dir);
+				shoot (direc - lowerend.position);
+				isShootable = false;
+			}
 		}
 	}
 

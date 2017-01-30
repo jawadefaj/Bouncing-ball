@@ -29,6 +29,9 @@ public class NormalBall : MonoBehaviour, iBall {
 		}
 	}
 
+
+
+
 	public void SetPosition(Vector2 pos){
 		
 		position = pos;
@@ -41,6 +44,12 @@ public class NormalBall : MonoBehaviour, iBall {
 
 	public void Destroy(){
 		Destroy (this.gameObject);
+		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
+			IShootBall ishootball = ob.GetComponent<IShootBall> ();
+			if (ishootball != null)
+				ishootball.isShootable = true;
+			
+		}
 	}
 
 
@@ -58,7 +67,7 @@ public class NormalBall : MonoBehaviour, iBall {
 
 		//print (this.transform.position);
 		iBall i = other.GetComponent<iBall>();
-		print ("on trigger normal");
+		//print ("on trigger normal");
 		if(i != null){
 			if (i.isThrown)
 			{
@@ -67,8 +76,10 @@ public class NormalBall : MonoBehaviour, iBall {
 					if(ishootball!=null)
 					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
 				}
-				Destroy (other.gameObject);
-				Destroy (this.gameObject);
+				other.GetComponent<iBall> ().Destroy ();
+				this.GetComponent<iBall> ().Destroy ();
+				//Destroy (other.gameObject);
+				//Destroy (this.gameObject);
 
 			}
 		}
