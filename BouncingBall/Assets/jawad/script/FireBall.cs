@@ -44,6 +44,10 @@ public class FireBall : MonoBehaviour, iBall {
 	public void Destroy(){
 		Destroy (this.gameObject);
 	}
+
+	public void ScoreUpdate(int s){
+
+	}
 	// Use this for initialization
 	void Start () {
 		
@@ -61,20 +65,28 @@ public class FireBall : MonoBehaviour, iBall {
 			print ("inside if");
 			if (i != null)
 			{
-				RaycastHit2D rr1 = Physics2D.Raycast (other.transform.position + new Vector3(0.0f, 0.8f, 0.0f), new Vector2 (0.0f, 1.0f), blustdistance);
-				print ("rr1 "+rr1.collider.name);
-				if(rr1 != null)
-				Destroy (rr1.collider.gameObject);
+				RaycastHit2D rr1 = Physics2D.Raycast (other.transform.position + new Vector3 (0.0f, 0.8f, 0.0f), new Vector2 (0.0f, 1.0f), blustdistance);
+				print ("rr1 " + rr1.collider.name);
+				if (rr1 != null && rr1.collider.name.Contains ("Ball"))
+				{
+					Destroy (rr1.collider.gameObject);
+					print ("D1");
+				}
 
-				RaycastHit2D rr2 = Physics2D.Raycast (other.transform.position + new Vector3(0.8f, 0.0f, 0.0f), new Vector2 (1.0f, 0.0f), blustdistance);
-				print ("rr2 "+rr2.collider.name);
-				if(rr1 != null)
-				Destroy (rr2.collider.gameObject);
-
-				RaycastHit2D rr3 = Physics2D.Raycast (other.transform.position + new Vector3(-0.8f, 0.0f, 0.0f), new Vector2 (-1.0f, 0.0f), blustdistance);
-				print ("rr3 "+rr3.collider.name);
-				if(rr1 != null)
-				Destroy (rr3.collider.gameObject);
+				RaycastHit2D rr2 = Physics2D.Raycast (other.transform.position + new Vector3 (0.8f, 0.0f, 0.0f), new Vector2 (1.0f, 0.0f), blustdistance);
+				print ("rr2 " + rr2.collider.name);
+				if (rr1 != null && rr2.collider.name.Contains ("Ball"))
+				{
+					Destroy (rr2.collider.gameObject);
+					print ("D2");
+				}
+				RaycastHit2D rr3 = Physics2D.Raycast (other.transform.position + new Vector3 (-0.8f, 0.0f, 0.0f), new Vector2 (-1.0f, 0.0f), blustdistance);
+				print ("rr3 " + rr3.collider.name);
+				if (rr1 != null && rr3.collider.name.Contains ("Ball"))
+				{
+					Destroy (rr3.collider.gameObject);
+					print ("D3");
+				}
 			}
 
 

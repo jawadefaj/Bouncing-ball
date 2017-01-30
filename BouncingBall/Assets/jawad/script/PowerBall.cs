@@ -42,6 +42,10 @@ public class PowerBall : MonoBehaviour, iBall {
 	public void Destroy(){
 		Destroy (this.gameObject);
 	}
+
+	public void ScoreUpdate(int s){
+
+	}
 	// Use this for initialization
 	void Start () {
 		

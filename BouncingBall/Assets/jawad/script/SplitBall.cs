@@ -15,6 +15,7 @@ public class SplitBall : MonoBehaviour, iBall {
 	public float splittime = 0.0f;
 	public static bool split = true;
 
+
 	public void SetMoveDirection(Vector3 dir){
 		movedirection.x = dir.x;
 		movedirection.y = dir.y;
@@ -47,6 +48,10 @@ public class SplitBall : MonoBehaviour, iBall {
 	public void Destroy(){
 		Destroy (this.gameObject);
 	}
+
+	public void ScoreUpdate(int s){
+
+	}
 	// Use this for initialization
 	void Start () {
 		instantiatetime = Time.time;
@@ -54,8 +59,9 @@ public class SplitBall : MonoBehaviour, iBall {
 	
 	// Update is called once per frame
 	void Update () {
+		//print ("Split " + split + " Splittime " + splittime + " Ins " + (Time.time - instantiatetime));
 		this.gameObject.transform.position = Vector2.MoveTowards (this.gameObject.transform.position, this.gameObject.transform.position + movedirection, movespeed);
-		if ((Time.time - instantiatetime) > splittime && split)
+		if ((Time.time - instantiatetime) > splittime && split && this.isThrown)
 		{
 			Vector3 normal = new Vector3 ( 0.0f, 1.0f, 0.0f).normalized;
 			float product = Vector3.Dot ( - movedirection, normal);
@@ -65,7 +71,6 @@ public class SplitBall : MonoBehaviour, iBall {
 			Vector3 newmovedirection = - movedirection - pro;
 			newmovedirection.Normalize();
 			GameObject newball = Instantiate (this.gameObject, this.transform.position, this.transform.rotation);
-
 			iBall ib = newball.GetComponent<iBall> ();
 			ib.isThrown = true;
 			if (angle > 80 && angle < 100)

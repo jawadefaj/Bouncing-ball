@@ -43,6 +43,9 @@ public class NormalBall : MonoBehaviour, iBall {
 		Destroy (this.gameObject);
 	}
 
+	public void ScoreUpdate(int s){
+		
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -111,5 +114,6 @@ public interface iBall{
 	void SetMoveDirection (Vector3 dir);
 	void SetSpeed (float speed);
 	void Destroy ();
+	void ScoreUpdate (int s);
 
 }
