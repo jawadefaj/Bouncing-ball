@@ -49,6 +49,10 @@ public class FreezeBall :MonoBehaviour, iBall {
 
 		}
 	}
+
+	public void ScoreUpdate(int s){
+
+	}
 	// Use this for initialization
 	void Start () {
 		
