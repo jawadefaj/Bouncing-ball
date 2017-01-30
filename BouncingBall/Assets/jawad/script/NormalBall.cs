@@ -53,7 +53,7 @@ public class NormalBall : MonoBehaviour, iBall {
 	}
 
 	public void ScoreUpdate(int s){
-		
+		shooterBehaviour.score += s;
 	}
 
 	// Use this for initialization
@@ -79,6 +79,8 @@ public class NormalBall : MonoBehaviour, iBall {
 					if(ishootball!=null)
 					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
 				}
+
+				other.GetComponent<iBall> ().ScoreUpdate (1);
 				other.GetComponent<iBall> ().Destroy ();
 				this.GetComponent<iBall> ().Destroy ();
 				//Destroy (other.gameObject);
@@ -107,6 +109,7 @@ public class NormalBall : MonoBehaviour, iBall {
 			float product = Vector3.Dot (movedirection, normal);
 			Vector3 pro = 2 * product * normal;
 			movedirection = movedirection - pro;
+			Destroy (this.gameObject);
 		}
 		else if (other.tag == "Bottom")
 		{

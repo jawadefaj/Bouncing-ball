@@ -34,6 +34,10 @@ public class SplitBall : MonoBehaviour, iBall {
 		}
 	}
 
+	public void ScoreUpdate(int s){
+		shooterBehaviour.score += s;
+	}
+
 	public void SetPosition(Vector2 pos){
 
 		position = pos;
@@ -107,6 +111,7 @@ public class SplitBall : MonoBehaviour, iBall {
 					if(ishootball!=null)
 					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
 				}
+				other.GetComponent<iBall> ().ScoreUpdate (1);
 				other.GetComponent<iBall> ().Destroy ();
 				this.GetComponent<iBall> ().Destroy ();
 			//	Destroy (other.gameObject);

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class shooterBehaviour : MonoBehaviour, IShootBall {
 
@@ -10,6 +11,8 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 	private List<GameObject> balls = new List<GameObject> ();
 	private int curBallID = 1;
 	private bool isShoot = true;
+	public static int score = 0;
+	public Text scoreText;
 	//private bool rotatePoint = false;
 
 
@@ -48,7 +51,7 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 			int type = item.GetComponent<iBall>().type;
 
 			if (type == curBallID) {
-				print (curBallID);
+				//print (curBallID);
 				lowerend.up = dir;
 				Vector3 curDir = -lowerend.position + shootingPoint.position;
 				ball = Instantiate(item, shootingPoint.position, Quaternion.identity);
@@ -81,12 +84,14 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 
 	// Update is called once per frame
 	void Update () {
+
+		scoreText.text = "Score:" + score;
 		if (Input.GetMouseButtonDown (0) && isShootable) {
 			
 			Vector3 pos = Input.mousePosition;
 			pos.z = -10;
 			pos = Camera.main.ScreenToWorldPoint (pos);
-			print (-pos.x + " " +  -pos.y);
+			//print (-pos.x + " " +  -pos.y);
 			if (-pos.y > -2.7) {
 				Vector3 direc = new Vector3 (-pos.x, -pos.y, 0);
 				Vector3 dir = (direc - lowerend.position).normalized;

@@ -21,6 +21,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	public static bool freeze = false;
 	private float interval = 2.5f;
 	private int test = 0;
+	public Transform canon;
 
 
 	public void spawnBalls()
@@ -54,7 +55,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	/// </summary>
 	public void OnClickExit()
 	{
-		print ("On click exit called");
+	//	print ("On click exit called");
 		Application.Quit ();
 		SceneManager.LoadScene (1);
 
@@ -65,13 +66,13 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	/// </summary>
 	public void OnClickRestart()
 	{
-		print ("On click restart called");
+	//	print ("On click restart called");
 		InitializeGame ();
 	}
 
 	public void moveDown()
 	{
-		print ("total balls " + curBallList.Count);
+		//print ("total balls " + curBallList.Count);
 		foreach (var item in curBallList) {
 			if(item!=null)
 				item.transform.Translate (new Vector3(0,-1,0)*1.6f);
@@ -81,7 +82,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	public void moveUp()
 	{
 		countUp++;
-		print ("total balls " + curBallList.Count);
+		//print ("total balls " + curBallList.Count);
 		foreach (var item in curBallList) {
 			if(item!=null)
 				item.transform.Translate (new Vector3(0,1,0)*1.6f);
@@ -100,14 +101,15 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	void InitializeGame()
 	{
 		test++;
-
+		canon.rotation = Quaternion.identity;
+		shooterBehaviour.score = 0;
 		foreach (var item in curBallList) {
 			if(item)
 				item.GetComponent<iBall> ().Destroy ();
 		}
 		curBallList.Clear ();
 
-		print ("Curball count " + curBallList.Count);
+		//print ("Curball count " + curBallList.Count);
 		//if (test <= 1) {
 			iballSpawn = this.GetComponent<IBallSpawn> ();
 			iballSpawn.spawnBalls ();
@@ -148,7 +150,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 		}
 		if (freeze) {
 			print ("freezed");
-			interval = 6f;
+			interval = 4f;
 			freeze = false;
 		}
 	}
