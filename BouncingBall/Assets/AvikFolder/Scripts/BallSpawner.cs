@@ -21,21 +21,28 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	public static bool freeze = false;
 	private float interval = 2.5f;
 	private int test = 0;
+	private int ballID = 1;
 	public Transform canon;
 
 
 	public void spawnBalls()
 	{
 		float inc = 0f;
+		//int ran = Random.Range (1,10);
 		for (int i = 0; i < 5; i++) {
 			Vector2 pos = new Vector2 (startpos.localPosition.x + inc, startpos.localPosition.y);
-			int rand =  Random.Range (1,30) % 5 + 1;
+			int rand =  Random.Range (1,10);
+			//int rand =  Random.Range (1,30) % 5 + 1;
 			foreach (GameObject ball in ballList) {
+				if (rand >= 5) {
+					ballID = 1;
+				} else {
+					ballID = rand + 1;
+				}
 				int type = ball.GetComponent<iBall> ().type;
-				
 				//print ("type " + type);
 				//print ("rand " + rand);
-				if (type == rand) 
+				if (type == ballID) 
 				{
 					//print (type);
 					tempBall = ball;
@@ -100,7 +107,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 
 	void InitializeGame()
 	{
-		test++;
+		//test++;
 		canon.rotation = Quaternion.identity;
 		shooterBehaviour.score = 0;
 		foreach (var item in curBallList) {
@@ -125,18 +132,20 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.A)) {
-			
-			iballSpawn.moveDown ();
-			if(countUp==0)
-				iballSpawn.spawnBalls ();
-			else if(countUp>0)
-				countUp--;
-		} else if (Input.GetKeyDown (KeyCode.D)) {
-			iballSpawn.moveUp ();
-		}
+//		if (Input.GetKeyDown (KeyCode.A)) {
+//			
+//			iballSpawn.moveDown ();
+//			if(countUp==0)
+//				iballSpawn.spawnBalls ();
+//			else if(countUp>0)
+//				countUp--;
+//		} else if (Input.GetKeyDown (KeyCode.D)) {
+//			iballSpawn.moveUp ();
+//		}
+
 		curTime += Time.deltaTime;
 		if (curTime > interval && !freeze) {
+			print (countUp);
 			iballSpawn.moveDown ();
 			if(countUp==0)
 				iballSpawn.spawnBalls ();
