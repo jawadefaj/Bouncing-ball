@@ -77,7 +77,7 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 
 	// Use this for initialization
 	void Start () {
-		curBallID  =  Random.Range (1,30) % 5 + 1;
+		curBallID = 1;// Random.Range (1,30) % 5 + 1;
 	}
 
 
@@ -92,7 +92,7 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 			pos.z = -10;
 			pos = Camera.main.ScreenToWorldPoint (pos);
 			//print (-pos.x + " " +  -pos.y);
-			if (-pos.y > -2.7) {
+			if (-pos.y > -3.5f) {
 				Vector3 direc = new Vector3 (-pos.x, -pos.y, 0);
 				Vector3 dir = (direc - lowerend.position).normalized;
 				//shoot (dir);

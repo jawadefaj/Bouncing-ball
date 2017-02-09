@@ -7,7 +7,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 
 
 	public List <GameObject> ballList = new List<GameObject>();
-	public static List<GameObject> staticBallList = new List<GameObject> ();
+	//public static List<GameObject> staticBallList = new List<GameObject> ();
 	private List <GameObject> curBallList = new List<GameObject>();
 	private float speed = 2f;
 	private float curTime = 0;
@@ -19,7 +19,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	private int countUp = 0;
 	private float timerInc = .1f;
 	public static bool freeze = false;
-	private float interval = 3f;
+	private float interval = 5f;
 	private int test = 0;
 	private int ballID = 1;
 	public Transform canon;
@@ -29,7 +29,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	{
 		float inc = 0f;
 		//int ran = Random.Range (1,10);
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 8; i++) {
 			Vector2 pos = new Vector2 (startpos.localPosition.x + inc, startpos.localPosition.y);
 			int rand =  Random.Range (1,10);
 			//int rand =  Random.Range (1,30) % 5 + 1;
@@ -53,7 +53,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 					curBallList.Add (b);
 				}
 			}
-			inc += 1.545f;
+			inc += .96f;
 		}
 	}
 
@@ -82,7 +82,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 		//print ("total balls " + curBallList.Count);
 		foreach (var item in curBallList) {
 			if(item!=null)
-				item.transform.Translate (new Vector3(0,-1,0)*1.6f);
+				item.transform.Translate (new Vector3(0,-1,0)*.95f);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 		//print ("total balls " + curBallList.Count);
 		foreach (var item in curBallList) {
 			if(item!=null)
-				item.transform.Translate (new Vector3(0,1,0)*1.6f);
+				item.transform.Translate (new Vector3(0,1,0)*.95f);
 		}
 	}
 
@@ -101,8 +101,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 		ballShooter.GetComponent<IShootBall> ().initializeList (ballList);
 
 		InitializeGame ();
-		//iballSpawn.spawnBalls ();
-		//iballSpawn.moveDown ();
+
 	}
 
 	void InitializeGame()
@@ -143,6 +142,18 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 //			iballSpawn.moveUp ();
 //		}
 
+		//GameOver checking
+		foreach (var ball in curBallList) {
+			if(ball!=null)
+			{
+				if (ball.transform.localPosition.y < -2.38f) {
+					//print ("GameOver");
+					Application.Quit();
+					Time.timeScale = 0;
+				}
+			}
+		}
+
 		curTime += Time.deltaTime;
 		if (curTime > interval && !freeze) {
 			print (countUp);
@@ -152,14 +163,14 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 			else if(countUp>0)
 				countUp--;
 			curTime = timerInc;
-			interval = 3f;
+			interval = 5f;
 			if (timerInc < 1.5f) {
 				timerInc += .1f;
 			}
 		}
 		if (freeze) {
 			print ("freezed");
-			interval = 4f;
+			interval = 6.5f;
 			freeze = false;
 		}
 	}

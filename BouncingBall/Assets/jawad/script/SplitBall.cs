@@ -111,7 +111,7 @@ public class SplitBall : MonoBehaviour, iBall {
 					if(ishootball!=null)
 					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
 				}
-				other.GetComponent<iBall> ().ScoreUpdate (1);
+				this.GetComponent<iBall> ().ScoreUpdate (1);
 				other.GetComponent<iBall> ().Destroy ();
 				this.GetComponent<iBall> ().Destroy ();
 			//	Destroy (other.gameObject);

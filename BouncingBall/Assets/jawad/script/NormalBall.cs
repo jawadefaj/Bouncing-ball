@@ -43,6 +43,7 @@ public class NormalBall : MonoBehaviour, iBall {
 	}
 
 	public void Destroy(){
+		
 		Destroy (this.gameObject);
 		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
 			IShootBall ishootball = ob.GetComponent<IShootBall> ();
@@ -80,7 +81,7 @@ public class NormalBall : MonoBehaviour, iBall {
 					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
 				}
 
-				other.GetComponent<iBall> ().ScoreUpdate (1);
+				this.GetComponent<iBall> ().ScoreUpdate (1);
 				other.GetComponent<iBall> ().Destroy ();
 				this.GetComponent<iBall> ().Destroy ();
 				//Destroy (other.gameObject);

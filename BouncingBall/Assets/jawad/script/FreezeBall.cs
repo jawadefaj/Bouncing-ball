@@ -82,7 +82,7 @@ public class FreezeBall :MonoBehaviour, iBall {
 				}
 				BallSpawner.freeze = true;
 			//	print (BallSpawner.freeze);
-				other.GetComponent<iBall> ().ScoreUpdate (1);
+				this.GetComponent<iBall> ().ScoreUpdate (1);
 				other.GetComponent<iBall> ().Destroy ();
 				this.GetComponent<iBall> ().Destroy ();
 				//Destroy (other.gameObject);
