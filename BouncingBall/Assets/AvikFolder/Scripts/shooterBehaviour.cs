@@ -87,7 +87,7 @@ public class shooterBehaviour : MonoBehaviour, IShootBall {
 
 		scoreText.text = "Score:" + score;
 		if (Input.GetMouseButtonDown (0) && isShootable) {
-			
+			print ("count" + BallSpawner.curBallList.Count);
 			Vector3 pos = Input.mousePosition;
 			pos.z = -10;
 			pos = Camera.main.ScreenToWorldPoint (pos);

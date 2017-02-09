@@ -8,7 +8,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 
 	public List <GameObject> ballList = new List<GameObject>();
 	//public static List<GameObject> staticBallList = new List<GameObject> ();
-	private List <GameObject> curBallList = new List<GameObject>();
+	public static List <GameObject> curBallList = new List<GameObject>();
 	private float speed = 2f;
 	private float curTime = 0;
 	IBallSpawn iballSpawn;
@@ -107,6 +107,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	void InitializeGame()
 	{
 		//test++;
+		Time.timeScale = 1;
 		canon.rotation = Quaternion.identity;
 		shooterBehaviour.score = 0;
 		foreach (var item in curBallList) {
@@ -156,7 +157,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 
 		curTime += Time.deltaTime;
 		if (curTime > interval && !freeze) {
-			print (countUp);
+		//	print (countUp);
 			iballSpawn.moveDown ();
 			if(countUp==0)
 				iballSpawn.spawnBalls ();
@@ -169,7 +170,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 			}
 		}
 		if (freeze) {
-			print ("freezed");
+//			print ("freezed");
 			interval = 6.5f;
 			freeze = false;
 		}

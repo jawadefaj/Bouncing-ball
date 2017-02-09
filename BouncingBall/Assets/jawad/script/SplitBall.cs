@@ -49,6 +49,7 @@ public class SplitBall : MonoBehaviour, iBall {
 	}
 
 	public void Destroy(){
+		BallSpawner.curBallList.Remove (this.gameObject);
 		Destroy (this.gameObject);
 		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
 			IShootBall ishootball = ob.GetComponent<IShootBall> ();

@@ -9,7 +9,8 @@ public class FireBall : MonoBehaviour, iBall {
 	public Vector3 movedirection;
 	private float movespeed = 0.06f;
 	public bool Thrown = false;
-	public float blustdistance;
+	public float blustdistance = 2f;
+	private List<GameObject> activeBallList = new List<GameObject> (BallSpawner.curBallList);
 
 
 	public void SetMoveDirection(Vector3 dir){
@@ -46,6 +47,7 @@ public class FireBall : MonoBehaviour, iBall {
 	}
 
 	public void Destroy(){
+		BallSpawner.curBallList.Remove (this.gameObject);
 		Destroy (this.gameObject);
 		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
 			IShootBall ishootball = ob.GetComponent<IShootBall> ();
@@ -69,24 +71,37 @@ public class FireBall : MonoBehaviour, iBall {
 		if (this.Thrown == true)
 		{
 		//	print ("inside if");
-			if (i != null)
-			{
-				RaycastHit2D rr1 = Physics2D.Raycast (other.transform.position + new Vector3(0.0f, 0.8f, 0.0f), new Vector2 (0.0f, 1.0f), blustdistance);
-				//print ("rr1 "+rr1.collider.name);
-				if(rr1 != null && rr1.collider.name.Contains("Ball"))
-					Destroy (rr1.collider.gameObject);
+//			if (i != null)
+//			{
+//				RaycastHit2D rr1 = Physics2D.Raycast (other.transform.position + new Vector3(0.0f, 0.8f, 0.0f), new Vector2 (0.0f, 1.0f), blustdistance);
+//				//print ("rr1 "+rr1.collider.name);
+//				if(rr1 != null && rr1.collider.name.Contains("Ball"))
+//					Destroy (rr1.collider.gameObject);
+//
+//				RaycastHit2D rr2 = Physics2D.Raycast (other.transform.position + new Vector3(0.8f, 0.0f, 0.0f), new Vector2 (1.0f, 0.0f), blustdistance);
+//				//print ("rr2 "+rr2.collider.name);
+//				if(rr2 != null && rr2.collider.name.Contains("Ball"))
+//					Destroy (rr2.collider.gameObject);
+//
+//				RaycastHit2D rr3 = Physics2D.Raycast (other.transform.position + new Vector3(-0.8f, 0.0f, 0.0f), new Vector2 (-1.0f, 0.0f), blustdistance);
+//				//print ("rr3 "+rr3.collider.name);
+//				if(rr3 != null && rr3.collider.name.Contains("Ball"))
+//					Destroy (rr3.collider.gameObject);
+//			}
+			print("Other: " + other.transform.position);
+			foreach (GameObject ball in activeBallList) {
+				print (ball.transform.position);
 
-				RaycastHit2D rr2 = Physics2D.Raycast (other.transform.position + new Vector3(0.8f, 0.0f, 0.0f), new Vector2 (1.0f, 0.0f), blustdistance);
-				//print ("rr2 "+rr2.collider.name);
-				if(rr2 != null && rr2.collider.name.Contains("Ball"))
-					Destroy (rr2.collider.gameObject);
-
-				RaycastHit2D rr3 = Physics2D.Raycast (other.transform.position + new Vector3(-0.8f, 0.0f, 0.0f), new Vector2 (-1.0f, 0.0f), blustdistance);
-				//print ("rr3 "+rr3.collider.name);
-				if(rr3 != null && rr3.collider.name.Contains("Ball"))
-					Destroy (rr3.collider.gameObject);
+				float dist = Vector3.Distance (other.transform.position,ball.transform.position);
+				print ("distance : " + dist);
+				if (dist < blustdistance) {
+					print ("dist : " + dist);
+					print ("Blast " + blustdistance);
+					print (dist < blustdistance);
+					//print ("bal");
+					ball.GetComponent<iBall> ().Destroy ();
+				}
 			}
-
 
 		}
 
