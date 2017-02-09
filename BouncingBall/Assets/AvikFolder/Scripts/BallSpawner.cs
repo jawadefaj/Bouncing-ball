@@ -19,7 +19,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 	private int countUp = 0;
 	private float timerInc = .1f;
 	public static bool freeze = false;
-	private float interval = 2.5f;
+	private float interval = 3f;
 	private int test = 0;
 	private int ballID = 1;
 	public Transform canon;
@@ -152,7 +152,7 @@ public class BallSpawner : MonoBehaviour, IBallSpawn {
 			else if(countUp>0)
 				countUp--;
 			curTime = timerInc;
-			interval = 2.5f;
+			interval = 3f;
 			if (timerInc < 1.5f) {
 				timerInc += .1f;
 			}
