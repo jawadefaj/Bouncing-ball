@@ -31,6 +31,10 @@ public class FireBall : MonoBehaviour, iBall {
 		}
 	}
 
+	public void ScoreUpdate(int s){
+		shooterBehaviour.score += s;
+	}
+
 	public void SetPosition(Vector2 pos){
 		///print ("called");
 		position = pos;
@@ -43,10 +47,12 @@ public class FireBall : MonoBehaviour, iBall {
 
 	public void Destroy(){
 		Destroy (this.gameObject);
-	}
+		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
+			IShootBall ishootball = ob.GetComponent<IShootBall> ();
+			if (ishootball != null)
+				ishootball.isShootable = true;
 
-	public void ScoreUpdate(int s){
-
+		}
 	}
 	// Use this for initialization
 	void Start () {
@@ -62,31 +68,23 @@ public class FireBall : MonoBehaviour, iBall {
 		iBall i = other.GetComponent<iBall>();
 		if (this.Thrown == true)
 		{
-			print ("inside if");
+		//	print ("inside if");
 			if (i != null)
 			{
-				RaycastHit2D rr1 = Physics2D.Raycast (other.transform.position + new Vector3 (0.0f, 0.8f, 0.0f), new Vector2 (0.0f, 1.0f), blustdistance);
-				print ("rr1 " + rr1.collider.name);
-				if (rr1 != null && rr1.collider.name.Contains ("Ball"))
-				{
+				RaycastHit2D rr1 = Physics2D.Raycast (other.transform.position + new Vector3(0.0f, 0.8f, 0.0f), new Vector2 (0.0f, 1.0f), blustdistance);
+				//print ("rr1 "+rr1.collider.name);
+				if(rr1 != null && rr1.collider.name.Contains("Ball"))
 					Destroy (rr1.collider.gameObject);
-					print ("D1");
-				}
 
-				RaycastHit2D rr2 = Physics2D.Raycast (other.transform.position + new Vector3 (0.8f, 0.0f, 0.0f), new Vector2 (1.0f, 0.0f), blustdistance);
-				print ("rr2 " + rr2.collider.name);
-				if (rr1 != null && rr2.collider.name.Contains ("Ball"))
-				{
+				RaycastHit2D rr2 = Physics2D.Raycast (other.transform.position + new Vector3(0.8f, 0.0f, 0.0f), new Vector2 (1.0f, 0.0f), blustdistance);
+				//print ("rr2 "+rr2.collider.name);
+				if(rr2 != null && rr2.collider.name.Contains("Ball"))
 					Destroy (rr2.collider.gameObject);
-					print ("D2");
-				}
-				RaycastHit2D rr3 = Physics2D.Raycast (other.transform.position + new Vector3 (-0.8f, 0.0f, 0.0f), new Vector2 (-1.0f, 0.0f), blustdistance);
-				print ("rr3 " + rr3.collider.name);
-				if (rr1 != null && rr3.collider.name.Contains ("Ball"))
-				{
+
+				RaycastHit2D rr3 = Physics2D.Raycast (other.transform.position + new Vector3(-0.8f, 0.0f, 0.0f), new Vector2 (-1.0f, 0.0f), blustdistance);
+				//print ("rr3 "+rr3.collider.name);
+				if(rr3 != null && rr3.collider.name.Contains("Ball"))
 					Destroy (rr3.collider.gameObject);
-					print ("D3");
-				}
 			}
 
 
@@ -94,12 +92,21 @@ public class FireBall : MonoBehaviour, iBall {
 
 		//print (this.transform.position);
 
-		print ("on trigger fire");
+		//print ("on trigger fire");
 		if(i != null){
 			if (i.isThrown)
 			{
-				Destroy (other.gameObject);
-				Destroy (this.gameObject);
+				
+				foreach (GameObject ob in  Transform.FindObjectsOfType<GameObject>()) {
+					IShootBall ishootball = ob.GetComponent<IShootBall> ();
+					if(ishootball!=null)
+					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
+				}
+				other.GetComponent<iBall> ().ScoreUpdate (1);
+				other.GetComponent<iBall> ().Destroy ();
+				this.GetComponent<iBall> ().Destroy ();
+				//Destroy (other.gameObject);
+				//Destroy (this.gameObject);
 			}
 		}
 
@@ -123,6 +130,7 @@ public class FireBall : MonoBehaviour, iBall {
 			float product = Vector3.Dot (movedirection, normal);
 			Vector3 pro = 2 * product * normal;
 			movedirection = movedirection - pro;
+			Destroy (this.gameObject);
 		}
 		else if (other.tag == "Bottom")
 		{

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AvikFolder\Scripts\BallSpawner.cs" />
+     <Compile Include="Assets\AvikFolder\Scripts\shooterBehaviour.cs" />
      <Compile Include="Assets\BallBehavior.cs" />
      <Compile Include="Assets\jawad\script\FireBall.cs" />
      <Compile Include="Assets\jawad\script\FreezeBall.cs" />
@@ -54,7 +55,6 @@
      <Compile Include="Assets\jawad\script\PowerBall.cs" />
      <Compile Include="Assets\jawad\script\SplitBall.cs" />
      <Compile Include="Assets\jawad\script\test.cs" />
-     <Compile Include="Assets\shooterBehaviour.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

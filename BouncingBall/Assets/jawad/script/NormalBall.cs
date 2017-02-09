@@ -29,6 +29,9 @@ public class NormalBall : MonoBehaviour, iBall {
 		}
 	}
 
+
+
+
 	public void SetPosition(Vector2 pos){
 		
 		position = pos;
@@ -41,10 +44,16 @@ public class NormalBall : MonoBehaviour, iBall {
 
 	public void Destroy(){
 		Destroy (this.gameObject);
+		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
+			IShootBall ishootball = ob.GetComponent<IShootBall> ();
+			if (ishootball != null)
+				ishootball.isShootable = true;
+			
+		}
 	}
 
 	public void ScoreUpdate(int s){
-		
+		shooterBehaviour.score += s;
 	}
 
 	// Use this for initialization
@@ -61,12 +70,22 @@ public class NormalBall : MonoBehaviour, iBall {
 
 		//print (this.transform.position);
 		iBall i = other.GetComponent<iBall>();
-		print ("on trigger normal");
+		//print ("on trigger normal");
 		if(i != null){
 			if (i.isThrown)
 			{
-				Destroy (other.gameObject);
-				Destroy (this.gameObject);
+				foreach (GameObject ob in  Transform.FindObjectsOfType<GameObject>()) {
+					IShootBall ishootball = ob.GetComponent<IShootBall> ();
+					if(ishootball!=null)
+					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
+				}
+
+				other.GetComponent<iBall> ().ScoreUpdate (1);
+				other.GetComponent<iBall> ().Destroy ();
+				this.GetComponent<iBall> ().Destroy ();
+				//Destroy (other.gameObject);
+				//Destroy (this.gameObject);
+
 			}
 		}
 
@@ -90,6 +109,7 @@ public class NormalBall : MonoBehaviour, iBall {
 			float product = Vector3.Dot (movedirection, normal);
 			Vector3 pro = 2 * product * normal;
 			movedirection = movedirection - pro;
+			Destroy (this.gameObject);
 		}
 		else if (other.tag == "Bottom")
 		{

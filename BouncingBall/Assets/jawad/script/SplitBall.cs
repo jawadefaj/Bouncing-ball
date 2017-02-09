@@ -15,7 +15,6 @@ public class SplitBall : MonoBehaviour, iBall {
 	public float splittime = 0.0f;
 	public static bool split = true;
 
-
 	public void SetMoveDirection(Vector3 dir){
 		movedirection.x = dir.x;
 		movedirection.y = dir.y;
@@ -35,6 +34,10 @@ public class SplitBall : MonoBehaviour, iBall {
 		}
 	}
 
+	public void ScoreUpdate(int s){
+		shooterBehaviour.score += s;
+	}
+
 	public void SetPosition(Vector2 pos){
 
 		position = pos;
@@ -47,10 +50,12 @@ public class SplitBall : MonoBehaviour, iBall {
 
 	public void Destroy(){
 		Destroy (this.gameObject);
-	}
+		foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
+			IShootBall ishootball = ob.GetComponent<IShootBall> ();
+			if (ishootball != null)
+				ishootball.isShootable = true;
 
-	public void ScoreUpdate(int s){
-
+		}
 	}
 	// Use this for initialization
 	void Start () {
@@ -59,18 +64,19 @@ public class SplitBall : MonoBehaviour, iBall {
 	
 	// Update is called once per frame
 	void Update () {
-		//print ("Split " + split + " Splittime " + splittime + " Ins " + (Time.time - instantiatetime));
 		this.gameObject.transform.position = Vector2.MoveTowards (this.gameObject.transform.position, this.gameObject.transform.position + movedirection, movespeed);
-		if ((Time.time - instantiatetime) > splittime && split && this.isThrown)
+		if ((Time.time - instantiatetime) > splittime && Thrown)
 		{
+			instantiatetime = Time.time;
 			Vector3 normal = new Vector3 ( 0.0f, 1.0f, 0.0f).normalized;
 			float product = Vector3.Dot ( - movedirection, normal);
 			float angle = Vector3.Angle (movedirection, new Vector3 (1.0f, 0.0f, 0.0f));
-			print (" angle "+angle);
+			//print (" angle "+angle);
 			Vector3 pro = 2 * product * normal;
 			Vector3 newmovedirection = - movedirection - pro;
 			newmovedirection.Normalize();
 			GameObject newball = Instantiate (this.gameObject, this.transform.position, this.transform.rotation);
+
 			iBall ib = newball.GetComponent<iBall> ();
 			ib.isThrown = true;
 			if (angle > 80 && angle < 100)
@@ -81,10 +87,10 @@ public class SplitBall : MonoBehaviour, iBall {
 				
 
 			ib.SetMoveDirection (newmovedirection);
-			this.transform.localScale *= 0.70f; 
+			this.transform.localScale *= 1.0f; 
 			newball.transform.localScale = this.transform.localScale;
 			ib.SetSpeed (movespeed);
-			split = false;
+			//split = false;
 		}
 
 
@@ -95,12 +101,22 @@ public class SplitBall : MonoBehaviour, iBall {
 
 		//print (this.transform.position);
 		iBall i = other.GetComponent<iBall>();
-		print ("on trigger split");
+		//print ("on trigger split");
 		if(i != null){
 			if (i.isThrown && !this.isThrown)
 			{
-				Destroy (other.gameObject);
-				Destroy (this.gameObject);
+			//	print ("isthwn");
+				foreach (GameObject ob in Transform.FindObjectsOfType<GameObject>()) {
+					IShootBall ishootball = ob.GetComponent<IShootBall> ();
+					if(ishootball!=null)
+					ishootball.setDestroyedID (this.GetComponent<iBall>().type);
+				}
+				other.GetComponent<iBall> ().ScoreUpdate (1);
+				other.GetComponent<iBall> ().Destroy ();
+				this.GetComponent<iBall> ().Destroy ();
+			//	Destroy (other.gameObject);
+				//Destroy (this.gameObject);
+
 			}
 		}
 
@@ -124,6 +140,7 @@ public class SplitBall : MonoBehaviour, iBall {
 			float product = Vector3.Dot (movedirection, normal);
 			Vector3 pro = 2 * product * normal;
 			movedirection = movedirection - pro;
+			Destroy (this.gameObject);
 		}
 		else if (other.tag == "Bottom")
 		{
